@@ -84,6 +84,18 @@ def read_all_files(directory):
                     print(f"讀取文件時發生錯誤: {file_path}, 錯誤: {e}")  # 讀取文件時發生錯誤：
     return all_text
 
+@app.get("/privacy-policy/", response_class=HTMLResponse)  # Define a new route for the Privacy Policy
+async def get_privacy_policy():
+    # Assuming the HTML file is in the root directory of your project
+    file_path = "Privacy_Policy.html"
+    if os.path.isfile(file_path):
+        # Open and read the HTML file content
+        with open(file_path, "r", encoding="utf-8") as file:
+            html_content = file.read()
+        # Return the HTML content as an HTMLResponse
+        return HTMLResponse(content=html_content)
+    else:
+        raise HTTPException(status_code=404, detail="Privacy Policy not found.")
 
 if __name__ == "__main__":
     import uvicorn
